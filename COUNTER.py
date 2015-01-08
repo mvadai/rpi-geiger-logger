@@ -142,12 +142,13 @@ class COUNTER:
 	def csv_write(self):
 		self.filename = 'GPIO%d-%s.csv' % (self.PIN, strftime("%d-%b-%Y-%H-%M-%S", gmtime()))
 		with open(self.filename, 'wb') as csvfile:
-			 gmwriter = csv.writer(csvfile, delimiter=',')
-			 gmwriter.writerow(['Average cpm:', self.av_cpm(), 'Average dose:', self.av_dose()])
-			 gmwriter.writerow(['Count', self.CNT])
-			 gmwriter.writerow(['Times (s)', 'Actual doses (uGy/h)', 'Actual CPMs'])
-			 i = 0
-			 while i < len(self.TIMES):
-#				gmwriter.writerow([self.TIMES[i], self.DOSES[i], self.CPMS[i]])
-				gmwriter.writerow([self.TIMES[i]])
-				i += 1
+			gmwriter = csv.writer(csvfile, delimiter=',')
+			gmwriter.writerow(['Average cpm:', self.av_cpm(), 'Average dose:', self.av_dose()])
+			gmwriter.writerow(['Count', self.CNT])
+			gmwriter.writerow(['Times (s)', 'Actual doses (uGy/h)', 'Actual CPMs'])
+			if self.av_cpm() < 6000:
+				i = 0
+				while i < len(self.TIMES):
+#					gmwriter.writerow([self.TIMES[i], self.DOSES[i], self.CPMS[i]])
+					gmwriter.writerow([self.TIMES[i]])
+					i += 1
