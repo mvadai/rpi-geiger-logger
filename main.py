@@ -179,6 +179,7 @@ while time() < start_time + logging_time:
 	sleep(1)
 
 # writing raw data
+print 'Calculating statistics and wiring data to files. This can take considerable time.\n'
 GM1_COUNTER.csv_write()
 print '{0:25}{1}'.format('GM1 Raw:',GM1_COUNTER.filename)
 GM1_COUNTER.exponential()
