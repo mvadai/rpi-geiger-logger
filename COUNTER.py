@@ -22,14 +22,10 @@ class COUNTER:
 		self.START_TIME = time()
 		self.CNT = 0
 		self.TIMES = []
-		self.DOSES = []
-		self.CPMS = []
 	
 	def update(self):
 		self.CNT += 1
 		self.TIMES.append(time() - self.START_TIME)
-#		self.DOSES.append(self.dose())
-#		self.CPMS.append(self.cpm())
 
 	#returns the average CPM for the whole time period
 	def av_cpm(self):
@@ -145,10 +141,9 @@ class COUNTER:
 			gmwriter = csv.writer(csvfile, delimiter=',')
 			gmwriter.writerow(['Average cpm:', self.av_cpm(), 'Average dose:', self.av_dose()])
 			gmwriter.writerow(['Count', self.CNT])
-			gmwriter.writerow(['Times (s)', 'Actual doses (uGy/h)', 'Actual CPMs'])
+			gmwriter.writerow(['Times (s)'])
 			if self.av_cpm() < 6000:
 				i = 0
 				while i < len(self.TIMES):
-#					gmwriter.writerow([self.TIMES[i], self.DOSES[i], self.CPMS[i]])
 					gmwriter.writerow([self.TIMES[i]])
 					i += 1
