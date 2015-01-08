@@ -100,44 +100,44 @@ class COUNTER:
 	# Calculates the statistics on GM hit times and writes it to a csv file.
 	def exponential(self):
 		self.expfilename = 'GPIO%d-exp-%s.csv' % (self.PIN, strftime("%d-%b-%Y-%H-%M-%S", gmtime()))
+		if self.av_cpm() < 6000:
+			# calculationg time differences
+			i = 0
+			t = []
+			while i < len(self.TIMES)-2:
+				t.append(self.TIMES[i+1] - self.TIMES[i])
+				i += 1
+			t.sort()
 		
-		# calculationg time differences
-		i = 0
-		t = []
-		while i < len(self.TIMES)-2:
-			t.append(self.TIMES[i+1] - self.TIMES[i])
-			i += 1
-		t.sort()
-		
-		# Calculating optimal time interval lengths
-		length = len(t)
-		if length > 0:
-			num_boxes = int(log(length, 2))
-		else:
-			num_boxes = 1
+			# Calculating optimal time interval lengths
+			length = len(t)
+			if length > 0:
+				num_boxes = int(log(length, 2))
+			else:
+				num_boxes = 1
 
-		if num_boxes < 1:
-			time_interval = float(t[length-1])/1
-		elif length > 0:
-			time_interval = float(t[length-1])/num_boxes
-		else:
-			time_interval = 1
+			if num_boxes < 1:
+				time_interval = float(t[length-1])/1
+			elif length > 0:
+				time_interval = float(t[length-1])/num_boxes
+			else:
+				time_interval = 1
 		
-		with open(self.expfilename, 'wb') as csvfile:
-			expwriter = csv.writer(csvfile, delimiter=',')
-			expwriter.writerow(['Time interval end (s)', 'Number of hits in time interval'])
-			interval = time_interval
-			cnt = 0
-			for tm in t:
-				#since t is sorted there's no need to check for the low boundary
-				if tm <= interval:
-					cnt += 1
-				else:
-					expwriter.writerow([interval, cnt])
-					interval += time_interval
-					cnt = 1
-		del t
-		gc.collect()
+			with open(self.expfilename, 'wb') as csvfile:
+				expwriter = csv.writer(csvfile, delimiter=',')
+				expwriter.writerow(['Time interval end (s)', 'Number of hits in time interval'])
+				interval = time_interval
+				cnt = 0
+				for tm in t:
+					#since t is sorted there's no need to check for the low boundary
+					if tm <= interval:
+						cnt += 1
+					else:
+						expwriter.writerow([interval, cnt])
+						interval += time_interval
+						cnt = 1
+			del t
+			gc.collect()
 		
 	def csv_write(self):
 		self.filename = 'GPIO%d-%s.csv' % (self.PIN, strftime("%d-%b-%Y-%H-%M-%S", gmtime()))
