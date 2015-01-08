@@ -28,8 +28,8 @@ class COUNTER:
 	def update(self):
 		self.CNT += 1
 		self.TIMES.append(time() - self.START_TIME)
-		self.DOSES.append(self.dose())
-		self.CPMS.append(self.cpm())
+#		self.DOSES.append(self.dose())
+#		self.CPMS.append(self.cpm())
 
 	#returns the average CPM for the whole time period
 	def av_cpm(self):
@@ -67,7 +67,7 @@ class COUNTER:
 			t = list(self.TIMES)
 			i = len(t)
 			cnt = 0
-			while i > 0 and t[i-1] > last_minute - self.START_TIME:
+			while i > 0 and t[i-1] > ( last_minute - self.START_TIME ):
 				i -= 1
 				cnt += 1
 			return cnt
@@ -148,5 +148,6 @@ class COUNTER:
 			 gmwriter.writerow(['Times (s)', 'Actual doses (uGy/h)', 'Actual CPMs'])
 			 i = 0
 			 while i < len(self.TIMES):
-				 gmwriter.writerow([self.TIMES[i], self.DOSES[i], self.CPMS[i]])
-				 i += 1
+#				gmwriter.writerow([self.TIMES[i], self.DOSES[i], self.CPMS[i]])
+				gmwriter.writerow([self.TIMES[i]])
+				i += 1
