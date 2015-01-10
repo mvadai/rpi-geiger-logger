@@ -50,3 +50,6 @@ CPStomR_gm1 = 8.77
 CPStomR_gm2 = 8.77
 CPStomR_gm3 = 8.77
 CPStomR_cosmic = 8.77
+
+# Set the screen refresh rate in seconds.
+refresh = 1

@@ -30,6 +30,7 @@ CPStomR_gm2 = float(CPStomR_gm2)
 CPStomR_gm3 = float(CPStomR_gm3)
 CPStomR_cosmic = float(CPStomR_cosmic)
 logging_time = int(logging_time)
+refresh_rate = int(refresh)
 
 #checking settings
 if trigger_type_gm1 != 'FALLING' and trigger_type_gm1 != 'RISING':
@@ -176,7 +177,7 @@ if COSMIC != 0:
 	
 while time() < start_time + logging_time:
 	print_output()
-	sleep(1)
+	sleep(refresh_rate)
 
 # writing raw data
 print 'Calculating statistics and wiring data to files. This can take considerable time.\n'
